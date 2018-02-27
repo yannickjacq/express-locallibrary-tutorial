@@ -4,12 +4,24 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
 
+//require perso
 var index = require('./routes/index');
 var users = require('./routes/users');
-var newUser = require('./routes/newUser');
+var events = require('./routes/events');
 
 var app = express();
+
+//set up default mongoose connection
+var mongoDB = 'mongodb://127.0.0.1/library_database';
+mongoose.connect(mongoDB);
+//Get mongoose to use the global promise library
+mongoose.Promise = global.Promise;
+//get the default connection
+var db = mongoose.connection;
+//Bind connection to error event (to get notification of connection errors)
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -25,7 +37,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
-app.use('/users/new', newUser);
+app.use('/events', events);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

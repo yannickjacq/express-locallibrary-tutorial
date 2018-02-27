@@ -1,6 +1,6 @@
 
 var moment = require('moment');
 
-exports.lifespan = function(date_min, date_max){
-    return moment(date_min).diff(date_max, year);
-}
+exports.lifespan = function(startDate, endDate){
+    return moment.duration(endDate - startDate).years();
+};

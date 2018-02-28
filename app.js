@@ -16,8 +16,13 @@ var api = require('./routes/api');
 var app = express();
 
 //set up default mongoose connection
-var mongoDB = 'mongodb://127.0.0.1/library_database';
-mongoose.connect(mongoDB);
+
+if(process.env.NODE_ENV === 'test') {
+  mongoose.connect('mongodb://127.0.0.1/library_database_test')
+} else {
+  mongoose.connect('mongodb://127.0.0.1/library_database')
+}
+
 //Get mongoose to use the global promise library
 mongoose.Promise = global.Promise;
 //get the default connection

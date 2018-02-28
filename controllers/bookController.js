@@ -12,3 +12,9 @@ exports.getBooks = function(req, res){
         res.render('books', {books});
     });
 }
+
+exports.APIgetBooks = function(req, res){
+    bookModel.find().exec(function(err, books){
+        res.send({books});
+    })
+}

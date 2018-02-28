@@ -1,0 +1,10 @@
+extends layout
+
+block content
+    each book in books
+        ul
+            li= book.title
+            li= book.author.name
+            li= book.summary
+            li= book.isbn
+            li= book.url

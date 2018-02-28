@@ -9,24 +9,27 @@ exports.catalogController = function(req, res){
 
     var bookCount, copies, availableCopies, authorCount, genreCount;
 
-    async.parallel([
-        function (callback){
-            bookCount = bookModel.count(callback)
+    async.parallel({
+        bookCount : function (callback){
+            //bookCount = bookModel.count(callback)
+            bookModel.count(callback)
         },
-        function (callback){
-            copies = bookInstanceModel.count(callback);
+        copies : function (callback){
+            bookInstanceModel.count(callback);
         },
-        function (callback){
-            availableCopies = bookInstanceMode.count({status: 'Available'}, callback);
+        availableCopies : function (callback){
+            bookInstanceModel.count({status: 'Available'}, callback);
         },
-        function (callback){
-            authorCount = authorModel.count(callback);
+        authorCount : function (callback){
+            authorModel.count(callback);
         },
-        function (callback){
-            genreCount = genreModel.count(callback);
+        genreCount : function (callback){
+            genreModel.count(callback);
         }   
-    ], 
-)
+    }, function(err, results) {
+        console.log(results);
+        res.render('catalog', {results})
+    });
     // bookCount = bookModel.count({}, );
     // copies = bookInstanceModel.count({}, );
     // availableCopies = bookInstanceMode.count({status: 'Available'},);

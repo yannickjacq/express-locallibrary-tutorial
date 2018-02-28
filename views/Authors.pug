@@ -1,0 +1,11 @@
+extends layout
+
+block content
+    each author in authors
+        ul
+            li= author.first_name
+            li= author.family_name
+            li= author.date_of_birth
+            li= author.date_of_death
+            li= author.lifespan
+            li= author.url

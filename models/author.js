@@ -13,7 +13,7 @@ var authorSchema = new Schema({
 
 authorSchema.virtual('name').get(function(){
    // return first_name + ' ' + family_name; // -> voir string literal
-    return '${this.first_name} ${this.family_name}'
+    return `${this.first_name} ${this.family_name}`
 })
 
 authorSchema.virtual('lifespan').get(function(){

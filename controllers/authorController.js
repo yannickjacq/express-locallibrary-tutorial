@@ -1,7 +1,20 @@
+var mongoose = require('mongoose');
+var authorModel = require('../models/author');
+var async = require('async');
+
 
 exports.getAuthors = function(req, res){
     //res.send('Page de liste des auteurs');
-    res.render('getAuthors', { title: 'Tous les auteurs' });
+    authorModel.find().exec(function(err, authors){
+        res.render('authors', {authors});
+    })
+};
+    
+exports.APIgetAuthors = function(req, res){
+    //res.send('Page de liste des auteurs');
+    authorModel.find().exec(function(err, authors){
+        res.send({authors});
+    })
 };
 
 exports.getAuthorbyId = function(req, res){
@@ -20,4 +33,4 @@ exports.updateAuthor = function(req, res){
 
 exports.deleteAuthor = function(req, res){
     res.send('page de suppression d\'un auteur. Auteur : ' + req.params.id);
-}
+};
